@@ -9,12 +9,12 @@ jobs:
         - name: my-step
         run: ci/build-app.sh
   Test:
-    need: Clone-down
+    needs: Clone-down
       steps:
         - name: test
         run: ci/unit-test-app.sh
   Build:
-    need: Test
+    needs: Test
       steps:
         - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
