@@ -49,13 +49,14 @@ jobs:
   
   Docker-Image:
       runs-on: ubuntu-latest
-      needs: [Build,Test]
-      - name: Download code
-      uses: actions/download-artifact@v2
-      with:
-        name: code
-        path: .
-      - name: Build Docker
-        run: chmod +x ci/build-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/build-docker.sh
-      - name: Push Docker
-        run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/push-docker.sh
+      needs: Build && Test
+      steps:
+        - name: Download code
+          uses: actions/download-artifact@v2
+          with:
+            name: code
+            path: .
+        - name: Build Docker
+          run: chmod +x ci/build-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/build-docker.sh
+        - name: Push Docker
+          run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/push-docker.sh
