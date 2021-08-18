@@ -15,6 +15,7 @@ jobs:
       with:
         name: code
         path: .
+
   Test:
       runs-on: ubuntu-latest
       needs: Clone-down
@@ -27,6 +28,7 @@ jobs:
           path: .
       - name: Test with Gradle
         run: chmod +x ci/unit-test-app.sh && ci/unit-test-app.sh
+  
   Build:
       runs-on: ubuntu-latest
       needs: Clone-down
@@ -44,14 +46,15 @@ jobs:
         with:
           name: code
           path: .
-    Docker-Image:
-        needs: [Build,Test]
-        - name: Download code
-        uses: actions/download-artifact@v2
-        with:
-          name: code
-          path: .
-        - name: Build Docker
-          run: chmod +x ci/build-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/build-docker.sh
-        - name: Push Docker
-          run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/push-docker.sh
+  
+  Docker-Image:
+      needs: [Build,Test]
+      - name: Download code
+      uses: actions/download-artifact@v2
+      with:
+        name: code
+        path: .
+      - name: Build Docker
+        run: chmod +x ci/build-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/build-docker.sh
+      - name: Push Docker
+        run: chmod +x ci/push-docker.sh && export GIT_COMMIT="GA-$GITHUB_SHA && ci/push-docker.sh
