@@ -25,5 +25,5 @@ jobs:
         uses: actions/checkout@v2
         uses: actions/upload-artifact@v2
         with:
-        name: code
-        path: .
+          name: code
+          path: .
