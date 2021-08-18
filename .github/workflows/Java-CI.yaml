@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
-      -name: test
+      - name: test
         uses: actions/checkout@v2
         run: ci/unit-test-app.sh
   Build:
@@ -25,5 +25,5 @@ jobs:
         uses: actions/checkout@v2
         uses: actions/upload-artifact@v2
         with:
-          name: code
-          path: .
+        name: code
+        path: .
